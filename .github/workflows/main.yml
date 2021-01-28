@@ -18,16 +18,10 @@ jobs:
         run: awk -vORS=, '{ print $1 }' actions-list.txt | sed 's/,$/\n/'
 
       - name: Get Org Name
-        run: |
-          echo 'org_name<<EOF' >> $GITHUB_ENV
-          echo $GITHUB_REPOSITORY | awk -F "/" '{print $1}' >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
+        run: echo "org_name=$(echo $GITHUB_REPOSITORY | awk -F "/" '{print $1}')" >> $GITHUB_ENV
 
-      - name: Echo env teapot
-        run: |
-          echo << 'EOF'
-          ${{ env.org_name }}
-          echo 'EOF'
+      - name: Echo org_name
+        run: echo "${{ env.org_name }}"
       
       # - uses: octokit/request-action@v2.x
       #   id: set_approved_actions
