@@ -15,7 +15,7 @@ jobs:
             
         #run: cat $USERS_LIST | jq -r '[.[] | select(.isActive == false) | .login ] | join(",")' >> ./innactive-users-list.txt && cat ./innactive-users-list.txt
       - name: Build actions list string
-        run: awk -vORS=, '{ print $1 }' actions-list.txt | sed 's/,$/\n/'
+        run: echo "actions_list=$(awk -vORS=, '{ print $1 }' actions-list.txt | sed 's/,$/\n/')" >> $GITHUB_ENV
 
       - name: Get Org Name
         run: echo "org_name=$(echo $GITHUB_REPOSITORY | awk -F "/" '{print $1}')" >> $GITHUB_ENV
@@ -23,20 +23,15 @@ jobs:
       - name: Echo org_name
         run: echo "${{ env.org_name }}"
       
-      # - uses: octokit/request-action@v2.x
-      #   id: set_approved_actions
-      #   with:
-      #     route: PUT /orgs/{org}/actions/permissions/selected-actions
-      #     owner: octokit
-      #     repo: request-action
-      #     name: "Test check run"
-      #     head_sha: ${{ github.sha }}
-      #     output: | # The | is significant!
-      #       title: Test check run title
-      #       summary: A summary of the test check run
-      #       images:
-      #         - alt: Test image
-      #           image_url: https://octodex.github.com/images/jetpacktocat.png
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - run: "echo latest release: ${{ steps.get_latest_release.outputs.data }}"
+      - uses: octokit/request-action@v2.x
+        id: set_approved_actions
+        with:
+          route: PUT /orgs/{org}/actions/permissions/selected-actions
+          org: ${{ env.org_name }}
+          github_owned_allowed: true
+          patterns_allowed: [
+            ${{ env.actions_list }}
+          ],
+          verified_allowed: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

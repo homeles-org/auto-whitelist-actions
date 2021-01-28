@@ -1,3 +1,5 @@
 homeles-org/*
-iHOMIES/*
+iHOMIES/test-repo@master
 homeles/*
+monalisa/octocat@v2
+monalisa/octocat@*
