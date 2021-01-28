@@ -16,3 +16,33 @@ jobs:
         #run: cat $USERS_LIST | jq -r '[.[] | select(.isActive == false) | .login ] | join(",")' >> ./innactive-users-list.txt && cat ./innactive-users-list.txt
       - name: Build actions list string
         run: awk -vORS=, '{ print $1 }' actions-list.txt | sed 's/,$/\n/'
+
+      - name: Get Org Name
+        run: |
+          echo 'org_name<<EOF' >> $GITHUB_ENV
+          $GITHUB_REPOSITORY | awk -F "/" '{print $1}' >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+
+      - name: Echo env teapot
+        run: |
+          echo << 'EOF'
+          ${{ env.org_name }}
+          echo 'EOF'
+      
+      # - uses: octokit/request-action@v2.x
+      #   id: set_approved_actions
+      #   with:
+      #     route: PUT /orgs/{org}/actions/permissions/selected-actions
+      #     owner: octokit
+      #     repo: request-action
+      #     name: "Test check run"
+      #     head_sha: ${{ github.sha }}
+      #     output: | # The | is significant!
+      #       title: Test check run title
+      #       summary: A summary of the test check run
+      #       images:
+      #         - alt: Test image
+      #           image_url: https://octodex.github.com/images/jetpacktocat.png
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - run: "echo latest release: ${{ steps.get_latest_release.outputs.data }}"
