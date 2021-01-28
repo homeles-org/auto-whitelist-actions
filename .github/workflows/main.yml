@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: [ seed ]
+
+jobs:
+
+  get-inactive-users:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+            
+        #run: cat $USERS_LIST | jq -r '[.[] | select(.isActive == false) | .login ] | join(",")' >> ./innactive-users-list.txt && cat ./innactive-users-list.txt
+      - name: Build actions list string
+        run: awk -vORS=, '{ print $1 }' actions-list.txt | sed 's/,$/\n/'
