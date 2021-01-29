@@ -1,5 +1,7 @@
 # auto-whitelist-actions
 
+![CI](https://github.com/homeles-org/auto-whitelist-actions/workflows/CI/badge.svg)
+
 This repository is designed to work as the gatekeeper for approved actions into your organization.
 
 ## Prerequisites
@@ -21,3 +23,7 @@ __Approval:__
 
 1. Owner to review/Approve/Reject the opened PRs.
 2. If PR approved, then the [Workflow](./.github/workflows/main.yml) will trigger and apply the new changes based on the [actions-list.txt](./actions-list.txt) in the same organization where the repository is hosted, this can be modified in the workflow file.
+
+## License
+
+[MIT](./LICENSE)
