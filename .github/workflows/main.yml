@@ -23,22 +23,22 @@ jobs:
       - name: Echo org_name
         run: echo "${{ env.org_name }}"
       
+      # - uses: octokit/request-action@v2.x
+      #   id: set_approved_actions
+      #   with:
+      #     route: PUT /orgs/{org}/actions/permissions/selected-actions
+      #     org: ${{ env.org_name }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.ORG_TOKEN }}
+
+
       - uses: octokit/request-action@v2.x
         id: set_approved_actions
         with:
           route: GET /orgs/{org}/actions/permissions/selected-actions
           org: ${{ env.org_name }}
+          github_owned_allowed: true
+          patterns_allowed: ${{ env.actions_list }}
+          verified_allowed: true
         env:
           GITHUB_TOKEN: ${{ secrets.ORG_TOKEN }}
-      - run: "echo latest release: ${{ steps.set_approved_actions.outputs.data }}"
-
-      # - uses: octokit/request-action@v2.x
-      #   id: set_approved_actions
-      #   with:
-      #     route: GET /orgs/${{ env.org_name }}/actions/permissions/selected-actions
-      #     #org: ${{ env.org_name }}
-      #     #github_owned_allowed: true
-      #     #patterns_allowed: ${{ env.actions_list }}
-      #     #verified_allowed: true
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
