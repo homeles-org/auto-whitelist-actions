@@ -26,10 +26,10 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: set_approved_actions
         with:
-          route: PUT /orgs/{org}/actions/permissions/selected-actions
+          route: GET /orgs/{org}/actions/permissions/selected-actions
           org: ${{ env.org_name }}
-          github_owned_allowed: true
-          patterns_allowed: ${{ env.actions_list }}
-          verified_allowed: true
+          #github_owned_allowed: true
+          #patterns_allowed: ${{ env.actions_list }}
+          #verified_allowed: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
