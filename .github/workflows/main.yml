@@ -38,7 +38,7 @@ jobs:
           route: PUT /orgs/{org}/actions/permissions/selected-actions
           org: ${{ env.org_name }}
           github_owned_allowed: true
-          patterns_allowed: [${{ env.actions_list }}]
+          patterns_allowed: ["${{ env.actions_list }}"]
           verified_allowed: true
         env:
           GITHUB_TOKEN: ${{ secrets.ORG_TOKEN }}
