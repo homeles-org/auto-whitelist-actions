@@ -39,7 +39,7 @@ jobs:
           org: ${{ env.org_name }}
           github_owned_allowed: true
           patterns_allowed: 
-           - ${{ env.actions_list }}
+            - ${{ env.actions_list }}
           verified_allowed: true
         env:
           GITHUB_TOKEN: ${{ secrets.ORG_TOKEN }}
