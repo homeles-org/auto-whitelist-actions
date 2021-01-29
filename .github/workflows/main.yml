@@ -13,7 +13,6 @@ jobs:
 
       - uses: actions/checkout@v2
             
-        #run: cat $USERS_LIST | jq -r '[.[] | select(.isActive == false) | .login ] | join(",")' >> ./innactive-users-list.txt && cat ./innactive-users-list.txt
       - name: Build actions list string
         run: echo "actions_list=$(awk -vORS=, '{ print $1 }' actions-list.txt | sed 's/,$/\n/')" >> $GITHUB_ENV
 
@@ -22,14 +21,6 @@ jobs:
 
       - name: Echo org_name
         run: echo "${{ env.org_name }}"
-      
-      # - uses: octokit/request-action@v2.x
-      #   id: set_approved_actions
-      #   with:
-      #     route: PUT /orgs/{org}/actions/permissions/selected-actions
-      #     org: ${{ env.org_name }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.ORG_TOKEN }}
 
 
       - uses: octokit/request-action@v2.x
