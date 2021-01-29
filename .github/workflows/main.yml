@@ -24,12 +24,20 @@ jobs:
         run: echo "${{ env.org_name }}"
       
       - uses: octokit/request-action@v2.x
-        id: set_approved_actions
+        id: get_latest_release
         with:
-          route: GET /orgs/${{ env.org_name }}/actions/permissions/selected-actions
-          #org: ${{ env.org_name }}
-          #github_owned_allowed: true
-          #patterns_allowed: ${{ env.actions_list }}
-          #verified_allowed: true
+          route: GET /repos/{owner}/{repo}/releases/latest
+          owner: octokit
+          repo: request-action
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: octokit/request-action@v2.x
+      #   id: set_approved_actions
+      #   with:
+      #     route: GET /orgs/${{ env.org_name }}/actions/permissions/selected-actions
+      #     #org: ${{ env.org_name }}
+      #     #github_owned_allowed: true
+      #     #patterns_allowed: ${{ env.actions_list }}
+      #     #verified_allowed: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
