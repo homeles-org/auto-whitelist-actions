@@ -2,3 +2,4 @@ monalisa/octocat@v2
 monalisa/octocat@*
 octokit/*
 homeles-org/*
+Microsoft/*
